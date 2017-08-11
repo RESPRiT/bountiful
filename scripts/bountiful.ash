@@ -396,13 +396,12 @@ boolean hunt_bounty(bounty b) {
         b.plural + " remaining!", "green");
   current = b;
 
-  // TODO: Fax logic for doable inaccessible bounties
-  if(useFax && !to_boolean(get_property("_photocopyUsed"))) {
-    if(can_banish(_bounty(SPECIAL).location) ||
-       (b.type == SPECIAL && !can_banish(_bounty(SPECIAL).location))) {
-      faxbot(_bounty(b.type).monster);
-      use_combat($item[photocopied monster], "combat");
-    }
+  // TODO: Better fax logic
+  if(useFax && !to_boolean(get_property("_photocopyUsed")) &&
+     (can_banish(_bounty(SPECIAL).location) ||
+     (b.type == SPECIAL && !can_banish(_bounty(SPECIAL).location)))) {
+    faxbot(_bounty(b.type).monster);
+    use_combat($item[photocopied monster], "combat");
   // use copy if that's what we're doing and a copy is avilable
   } else if(useCopier && item_amount($item[Rain-Doh box full of monster]) > 0 &&
             to_monster(get_property("rainDohMonster")) == b.monster) {
